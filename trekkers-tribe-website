@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trekkers Tribe - Adventure Awaits</title>
+    <meta name="description" content="Book amazing treks, road trips, and adventures across India and beyond">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="manifest" href="#" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-bar input, .search-bar select {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            flex: 1;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .tour-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        }
+
+        .tour-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+        }
+
+        .tour-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #2563eb;
+        }
+
+        .tour-description {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .tour-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tour-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #059669;
+        }
+
+        .tour-duration {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tour-dates {
+            margin-bottom: 1rem;
+        }
+
+        .date-tag {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .date-tag:hover, .date-tag.selected {
+            background: #2563eb;
+            color: white;
+        }
+
+        .book-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .book-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .book-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .booking-form {
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .payment-option {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option:hover, .payment-option.selected {
+            border-color: #2563eb;
+            background: #f3f4f6;
+        }
+
+        .itinerary {
+            margin-top: 1rem;
+        }
+
+        .itinerary h3 {
+            margin-bottom: 1rem;
+            color: #2563eb;
+        }
+
+        .day-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .day-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .tours-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 10% 10px;
+                padding: 1rem;
+            }
+        }
+
+        .floating-install {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+        }
+
+        .floating-install:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">🏔️ Trekkers Tribe</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#tours">Tours</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>Adventure Awaits</h1>
+                <p>Discover incredible treks, road trips, and experiences across India and beyond</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search destinations..." id="searchInput">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="trek">Treks</option>
+                        <option value="road">Road Trips</option>
+                        <option value="backpack">Backpacking</option>
+                        <option value="honeymoon">Honeymoon</option>
+                    </select>
+                    <button class="search-btn" onclick="searchTours()">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="tours" class="container">
+            <div class="tours-grid" id="toursGrid">
+                <!-- Tours will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="about" class="container" style="margin-top: 4rem; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #2563eb; margin-bottom: 2rem; font-size: 2.5rem;">About Trekkers Tribe</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8; color: #444;">
+                <p style="margin-bottom: 1.5rem;">
+                    Welcome to <strong>Trekkers Tribe</strong>, your number-one Trip planner. From the back-end to the on-field Trip experts, we are a team of experienced individuals who prioritize loyalty, commitment and customer satisfaction.
+                </p>
+                
+                <p style="margin-bottom: 1.5rem;">
+                    Apart from that, all your trips are assisted by our young and enthusiastic captains who will not let the environment go dull even for a minute. Trip/trek leaders? More like your buddies!
+                </p>
+                
+                <p style="margin-bottom: 2rem;">
+                    Now that the travel industry has gained a lot of popularity, we, at Trekkers Tribe aim at exploring the places that attract less number of tourists and are not much touched. Also, we try our best to make our participants witness the local culture of any respective destination and keep it raw. Because that is what exploring really means and we believe in keeping alive the real essence of Travel.
+                </p>
+                
+                <h3 style="color: #2563eb; margin-bottom: 1.5rem; font-size: 1.8rem;">Why Trekkers Tribe</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div style="padding: 1.5rem; background: #f8fafc; border-radius: 12px; border-left: 4px solid #2563eb;">
+                        <h4 style="color: #2563eb; margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center;">
+                            👥 Team Trekkers Tribe
+                        </h4>
+                        <p style="margin-bottom: 0;">
+                            From the back-end to the on-field Trip experts, we are a team of experienced individuals who prioritize loyalty, commitment and customer satisfaction. Apart from that, all your trips are assisted by our young and enthusiastic captains who will not let the environment go dull even for a minute. Trip/trek leaders? More like your buddies!
+                        </p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: #f8fafc; border-radius: 12px; border-left: 4px solid #059669;">
+                        <h4 style="color: #059669; margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center;">
+                            🤝 Community Travel
+                        </h4>
+                        <p style="margin-bottom: 0;">
+                            To all the first timers, travelling with a new group of people will absolutely change your definition of travel. From strangers to what feels like a family, community travelling is an experience of a lifetime.
+                        </p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: #f8fafc; border-radius: 12px; border-left: 4px solid #dc2626;">
+                        <h4 style="color: #dc2626; margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center;">
+                            🗺️ Explore the Unexplored
+                        </h4>
+                        <p style="margin-bottom: 0;">
+                            Now that the travel industry has gained a lot of popularity, we, at Trekkers Tribe aim at exploring the places that attract less number of tourists and are not much touched. Also, we try our best to make our participants witness the local culture of any respective destination and keep it raw. Because that is what exploring really means and we believe in keeping alive the real essence of Travel.
+                        </p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; background: #f8fafc; border-radius: 12px; border-left: 4px solid #7c3aed;">
+                        <h4 style="color: #7c3aed; margin-bottom: 1rem; font-size: 1.3rem; display: flex; align-items: center;">
+                            🛡️ Safe Space for Everyone
+                        </h4>
+                        <p style="margin-bottom: 0;">
+                            Travelling with strangers sounds uncomfortable, specially for female travelers but here at Trekkers Tribe, we make a safe space for our travelers and make sure nobody is left out! Skeptic about booking the trip/trek because none of your friends are available? Trust your gut and go for it, Trekkers Tribe has got you covered! Best adventure lies beyond your comfort zone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Book Your Adventure</h2>
+            
+            <div class="itinerary" id="itinerarySection">
+                <!-- Itinerary will be populated -->
+            </div>
+            
+            <form class="booking-form" id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="participants">Number of Participants</label>
+                    <input type="number" id="participants" name="participants" min="1" max="20" value="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="selectedDate">Selected Date</label>
+                    <input type="text" id="selectedDate" name="selectedDate" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <div class="payment-options">
+                        <div class="payment-option" onclick="selectPayment('upi')">
+                            <div>💳 UPI</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment('card')">
+                            <div>🏦 Card</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment('netbanking')">
+                            <div>🌐 Net Banking</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPayment('cash')">
+                            <div>💰 Cash on Trip</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialRequests">Special Requests</label>
+                    <textarea id="specialRequests" name="specialRequests" rows="3" placeholder="Any special dietary requirements, medical conditions, or preferences..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <div style="background: #f3f4f6; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <h4>Booking Summary</h4>
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                            <span>Total Amount:</span>
+                            <span id="totalAmount">₹0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                            <span>Advance (25%):</span>
+                            <span id="advanceAmount">₹0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="book-btn">Complete Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="floating-install" id="installPrompt" onclick="installPWA()">
+        📱 Install App
+    </div>
+
+    <script>
+        // Sample tour data
+        const tours = [
+            {
+                id: 1,
+                title: "Rajmachi Trek",
+                category: "trek",
+                description: "A scenic trek through the Western Ghats with ancient fort ruins and lush greenery.",
+                price: 2500,
+                duration: "2 Days",
+                image: "🏔️ Rajmachi Fort Trek",
+                dates: ["2024-08-15", "2024-08-22", "2024-08-29", "2024-09-05"],
+                itinerary: [
+                    { day: "Day 1", title: "Mumbai to Rajmachi", activities: "Travel to base village, start trek, reach Rajmachi plateau, explore fort ruins, overnight camping" },
+                    { day: "Day 2", title: "Sunrise & Return", activities: "Early morning sunrise view, breakfast, descend to base village, return journey to Mumbai" }
+                ]
+            },
+            {
+                id: 2,
+                title: "Ladakh Road Trip",
+                category: "road",
+                description: "Epic road journey through high-altitude desert landscapes and ancient monasteries.",
+                price: 45000,
+                duration: "12 Days",
+                image: "🏔️ Ladakh Adventure",
+                dates: ["2024-07-20", "2024-08-10", "2024-08-25", "2024-09-15"],
+                itinerary: [
+                    { day: "Day 1-2", title: "Delhi to Leh", activities: "Flight to Leh, acclimatization, local sightseeing, Leh Palace, Shanti Stupa" },
+                    { day: "Day 3-4", title: "Nubra Valley", activities: "Khardung La Pass, Diskit Monastery, Camel Safari at Hunder, overnight camps" },
+                    { day: "Day 5-6", title: "Pangong Tso", activities: "Journey to Pangong Lake, camping by the lake, photography, star gazing" },
+                    { day: "Day 7-12", title: "Exploration & Return", activities: "Visit Hemis, Thiksey monasteries, adventure activities, return journey" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Kerala Backwaters",
+                category: "backpack",
+                description: "Backpacking adventure through God's own country with backwater cruises and spice plantations.",
+                price: 15000,
+                duration: "7 Days",
+                image: "🌴 Kerala Backwaters",
+                dates: ["2024-08-01", "2024-08-08", "2024-08-15", "2024-08-22"],
+                itinerary: [
+                    { day: "Day 1-2", title: "Kochi Arrival", activities: "Arrive in Kochi, Fort Kochi exploration, Chinese fishing nets, local markets" },
+                    { day: "Day 3-4", title: "Munnar Hills", activities: "Travel to Munnar, tea plantation visits, Eravikulam National Park, trekking" },
+                    { day: "Day 5-6", title: "Alleppey Backwaters", activities: "Houseboat cruise, backwater villages, traditional Kerala cuisine" },
+                    { day: "Day 7", title: "Departure", activities: "Morning in Alleppey, departure preparations, airport transfer" }
+                ]
+            },
+            {
+                id: 4,
+                title: "Goa Honeymoon Package",
+                category: "honeymoon",
+                description: "Romantic getaway with beach resorts, sunset cruises, and intimate dining experiences.",
+                price: 35000,
+                duration: "5 Days",
+                image: "🏖️ Goa Romance",
+                dates: ["2024-08-10", "2024-08-17", "2024-08-24", "2024-08-31"],
+                itinerary: [
+                    { day: "Day 1", title: "Arrival & Beach Time", activities: "Airport pickup, luxury resort check-in, welcome drinks, beach relaxation" },
+                    { day: "Day 2", title: "North Goa Exploration", activities: "Baga Beach, Anjuna flea market, Fort Aguada, romantic dinner" },
+                    { day: "Day 3", title: "South Goa Serenity", activities: "Palolem Beach, Cabo de Rama Fort, sunset cruise with dinner" },
+                    { day: "Day 4", title: "Adventure & Spa", activities: "Water sports, couples spa session, private beach dinner" },
+                    { day: "Day 5", title: "Departure", activities: "Leisure morning, souvenir shopping, airport transfer" }
+                ]
+            },
+            {
+                id: 5,
+                title: "Himachal Road Trip",
+                category: "road",
+                description: "Scenic drive through mountains, valleys, and hill stations of Himachal Pradesh.",
+                price: 25000,
+                duration: "8 Days",
+                image: "🏔️ Himachal Journey",
+                dates: ["2024-07-25", "2024-08-05", "2024-08-15", "2024-08-25"],
+                itinerary: [
+                    { day: "Day 1-2", title: "Delhi to Shimla", activities: "Drive to Shimla, Mall Road, Christ Church, Jakhu Temple" },
+                    { day: "Day 3-4", title: "Manali Adventure", activities: "Rohtang Pass, Solang Valley, adventure activities, local culture" },
+                    { day: "Day 5-6", title: "Kasol & Tosh", activities: "Parvati Valley, Israeli cafes, short treks, river camping" },
+                    { day: "Day 7-8", title: "Return Journey", activities: "Chandigarh sightseeing, Rock Garden, return to Delhi" }
+                ]
+            },
+            {
+                id: 6,
+                title: "Meghalaya Expedition",
+                category: "backpack",
+                description: "Explore the wettest place on Earth with living root bridges and crystal clear pools.",
+                price: 20000,
+                duration: "6 Days",
+                image: "🌧️ Meghalaya Wonders",
+                dates: ["2024-08-12", "2024-08-19", "2024-08-26", "2024-09-02"],
+                itinerary: [
+                    { day: "Day 1", title: "Guwahati to Shillong", activities: "Flight to Guwahati, drive to Shillong, local sightseeing" },
+                    { day: "Day 2-3", title: "Cherrapunji", activities: "Nohkalikai Falls, Mawsmai Cave, Seven Sisters Falls, living root bridges" },
+                    { day: "Day 4-5", title: "Dawki & Mawlynnong", activities: "Crystal clear Dawki river, cleanest village in Asia, bamboo sky walk" },
+                    { day: "Day 6", title: "Departure", activities: "Morning in Shillong, drive to Guwahati, departure" }
+                ]
+            }
+        ];
+
+        let selectedTour = null;
+        let selectedPayment = null;
+        let deferredPrompt;
+
+        // PWA Installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installPrompt').style.display = 'block';
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('PWA installed');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installPrompt').style.display = 'none';
+                });
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayTours(tours);
+        });
+
+        function displayTours(toursToShow) {
+            const grid = document.getElementById('toursGrid');
+            grid.innerHTML = '';
+
+            toursToShow.forEach(tour => {
+                const tourCard = document.createElement('div');
+                tourCard.className = 'tour-card';
+                
+                const dates = tour.dates.map(date => 
+                    `<span class="date-tag" onclick="selectDate('${date}')">${formatDate(date)}</span>`
+                ).join('');
+
+                tourCard.innerHTML = `
+                    <div class="tour-image">${tour.image}</div>
+                    <div class="tour-content">
+                        <h3 class="tour-title">${tour.title}</h3>
+                        <p class="tour-description">${tour.description}</p>
+                        <div class="tour-details">
+                            <span class="tour-price">₹${tour.price.toLocaleString()}</span>
+                            <span class="tour-duration">${tour.duration}</span>
+                        </div>
+                        <div class="tour-dates">
+                            <strong>Available Dates:</strong><br>
+                            ${dates}
+                        </div>
+                        <button class="book-btn" onclick="openBookingModal(${tour.id})">
+                            View Details & Book
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(tourCard);
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-IN', { 
+                day: 'numeric', 
+                month: 'short' 
+            });
+        }
+
+        function selectDate(date) {
+            // Remove previous selections
+            document.querySelectorAll('.date-tag').forEach(tag => {
+                tag.classList.remove('selected');
+            });
+            
+            // Add selection to clicked date
+            event.target.classList.add('selected');
+            
+            // Store selected date
+            if (selectedTour) {
+                document.getElementById('selectedDate').value = formatDate(date);
+                updateBookingSummary();
+            }
+        }
+
+        function searchTours() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            let filteredTours = tours.filter(tour => {
+                const matchesSearch = tour.title.toLowerCase().includes(searchTerm) || 
+                                    tour.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !category || tour.category === category;
+                return matchesSearch && matchesCategory;
+            });
+            
+            displayTours(filteredTours);
+        }
+
+        function openBookingModal(tourId) {
+            selectedTour = tours.find(tour => tour.id === tourId);
+            const modal = document.getElementById('bookingModal');
+            
+            // Set modal title
+            document.getElementById('modalTitle').textContent = selectedTour.title;
+            
+            // Display itinerary
+            const itinerarySection = document.getElementById('itinerarySection');
+            itinerarySection.innerHTML = `
+                <h3>Detailed Itinerary</h3>
+                ${selectedTour.itinerary.map(item => `
+                    <div class="day-item">
+                        <div class="day-title">${item.day}: ${item.title}</div>
+                        <div>${item.activities}</div>
+                    </div>
+                `).join('')}
+            `;
+            
+            // Reset form
+            document.getElementById('bookingForm').reset();
+            document.getElementById('participants').value = 1;
+            updateBookingSummary();
+            
+            // Show modal
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            selectedTour = null;
+            selectedPayment = null;
+            
+            // Reset payment selections
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+        }
+
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            // Remove previous selections
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.classList.add('selected');
+        }
+
+        function updateBookingSummary() {
+            if (!selectedTour) return;
+            
+            const participants = parseInt(document.getElementById('participants').value) || 1;
+            const totalAmount = selectedTour.price * participants;
+            const advanceAmount = Math.round(totalAmount * 0.25);
+            
+            document.getElementById('totalAmount').textContent = `₹${totalAmount.toLocaleString()}`;
+            document.getElementById('advanceAmount').textContent = `₹${advanceAmount.toLocaleString()}`;
+        }
+
+        // Update summary when participants change
+        document.getElementById('participants').addEventListener('input', updateBookingSummary);
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedPayment) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            if (!document.getElementById('selectedDate').value) {
+                alert('Please select a date from the available options');
+                return;
+            }
+            
+            // Simulate booking process
+            const bookingData = {
+                tour: selectedTour.title,
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                participants: document.getElementById('participants').value,
+                date: document.getElementById('selectedDate').value,
+                paymentMethod: selectedPayment,
+                specialRequests: document.getElementById('specialRequests').value
+            };
+            
+            // Show success message
+            alert('🎉 Booking Confirmed!\n\nYour adventure is booked! You will receive a confirmation email shortly with payment details and further instructions.\n\nBooking ID: TT' + Math.random().toString(36).substr(2, 9).toUpperCase());
+            
+            closeModal();
+        });
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('bookingModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful');
+            }).catch(function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
